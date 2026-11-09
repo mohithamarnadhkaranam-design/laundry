@@ -1,0 +1,171 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Laundry Orders</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #123b70;
+            margin-bottom: 20px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: #1769aa;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #eaf3ff;
+            color: #123b70;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+        }
+
+        .update-btn {
+            background: #087f5b;
+            color: white;
+            border: none;
+            padding: 9px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <h1>Laundry Orders</h1>
+        <a href="/" class="btn">Back to Dashboard</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Laundry Type</th>
+            <th>Clothes</th>
+            <th>Service</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Update Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="order : ${orders}">
+
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customerName}"></td>
+            <td th:text="${order.phone}"></td>
+            <td th:text="${order.laundryType}"></td>
+            <td th:text="${order.clothesCount}"></td>
+            <td th:text="${order.serviceType}"></td>
+            <td th:text="${order.price}"></td>
+
+            <td th:text="${order.status}"></td>
+
+            <td>
+                <form th:action="@{/update-status/{id}(id=${order.id})}"
+                      method="post">
+
+                    <select name="status">
+                        <option value="Received"
+                                th:selected="${order.status == 'Received'}">
+                            Received
+                        </option>
+
+                        <option value="Washing"
+                                th:selected="${order.status == 'Washing'}">
+                            Washing
+                        </option>
+
+                        <option value="Ready"
+                                th:selected="${order.status == 'Ready'}">
+                            Ready
+                        </option>
+                    </select>
+
+                    <button type="submit" class="update-btn">
+                        Update
+                    </button>
+
+                </form>
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(orders)}">
+            <td colspan="9" class="empty">
+                No laundry orders found.
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
+```

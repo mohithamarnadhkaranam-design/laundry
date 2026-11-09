@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Laundry Order</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f6fc;
+            padding: 35px 15px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #dce6f2;
+        }
+
+        h1 {
+            color: #123b70;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            color: #64748b;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #123b70;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #123b70;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .price {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f0ff;
+            color: #123b70;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🧺 Create New Order</h1>
+    <p>Enter customer and laundry details</p>
+
+    <form action="/save-order" method="post">
+
+        <label>Customer Name</label>
+        <input type="text" name="customerName"
+               placeholder="Enter customer name" required>
+
+        <label>Phone Number</label>
+        <input type="tel" name="phone"
+               placeholder="Enter phone number"
+               pattern="[0-9]{10}" maxlength="10" required>
+
+        <label>Laundry Type</label>
+        <select name="laundryType" required>
+            <option value="">Select laundry type</option>
+            <option value="Wash">Wash</option>
+            <option value="Wash and Iron">Wash and Iron</option>
+            <option value="Dry Cleaning">Dry Cleaning</option>
+            <option value="Iron Only">Iron Only</option>
+        </select>
+
+        <label>Number of Clothes</label>
+        <input type="number" id="clothes" name="clothesCount"
+               min="1" placeholder="Enter quantity" required>
+
+        <label>Service Type</label>
+        <select id="service" name="serviceType" required>
+            <option value="Normal">Normal Service</option>
+            <option value="Express">Express Service (+ ₹50)</option>
+        </select>
+
+        <div class="price">
+            Estimated Price: ₹<span id="price">0</span>
+        </div>
+
+        <button type="submit">Save Laundry Order</button>
+
+    </form>
+
+    <a href="/" class="back">← Back to Dashboard</a>
+
+</div>
+
+<script>
+    const clothes = document.getElementById("clothes");
+    const service = document.getElementById("service");
+    const price = document.getElementById("price");
+
+    function calculatePrice() {
+        let quantity = Number(clothes.value) || 0;
+        let rate = 20;
+
+        if (service.value === "Express") {
+            rate += 50;
+        }
+
+        price.textContent = quantity > 0 ? quantity * rate : 0;
+    }
+
+    clothes.addEventListener("input", calculatePrice);
+    service.addEventListener("change", calculatePrice);
+</script>
+
+</body>
+</html>

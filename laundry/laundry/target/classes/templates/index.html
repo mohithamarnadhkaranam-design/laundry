@@ -1,0 +1,275 @@
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry Management Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f7fc;
+            color: #1e293b;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #123b70;
+            color: white;
+            position: fixed;
+            padding: 30px 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #dbeafe;
+            text-decoration: none;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .header h1 {
+            color: #123b70;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .admin {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            color: #123b70;
+            font-weight: bold;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .card h3 {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #123b70;
+        }
+
+        .blue {
+            border-left: 5px solid #2563eb;
+        }
+
+        .orange {
+            border-left: 5px solid #f59e0b;
+        }
+
+        .green {
+            border-left: 5px solid #10b981;
+        }
+
+        .section {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .section h2 {
+            color: #123b70;
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 22px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #123b70;
+        }
+
+        .secondary {
+            background: #e8f0ff;
+            color: #123b70;
+        }
+
+        .secondary:hover {
+            background: #d5e4ff;
+        }
+
+        .welcome {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">🧺 LaundryCare</div>
+
+        <a href="/" class="active">🏠 Dashboard</a>
+        <a href="/add-order">➕ Create Order</a>
+        <a href="/orders">📋 All Orders</a>
+        <a href="#">👥 Customers</a>
+        <a href="#">⚙ Settings</a>
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to Laundry Service Management System</p>
+            </div>
+
+            <div class="admin">Administrator</div>
+        </div>
+
+        <!-- Dashboard Statistics -->
+
+        <div class="cards">
+
+            <div class="card blue">
+                <h3>Total Orders</h3>
+                <div class="number" th:text="${totalOrders}">0</div>
+                <p class="welcome">All laundry orders</p>
+            </div>
+
+            <div class="card orange">
+                <h3>Washing Orders</h3>
+                <div class="number" th:text="${washingOrders}">0</div>
+                <p class="welcome">Currently processing</p>
+            </div>
+
+            <div class="card green">
+                <h3>Ready Orders</h3>
+                <div class="number" th:text="${readyOrders}">0</div>
+                <p class="welcome">Ready for collection</p>
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+
+        <div class="section">
+            <h2>Quick Actions</h2>
+
+            <div class="actions">
+                <a href="/add-order" class="btn">
+                    + Create New Order
+                </a>
+
+                <a href="/orders" class="btn secondary">
+                    View All Orders
+                </a>
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+
+        <div class="section">
+            <h2>Welcome to LaundryCare 🧺</h2>
+
+            <p class="welcome">
+                Manage customers, create laundry orders, track washing
+                progress and manage completed orders from one place.
+                Our system makes laundry service management simple and easy.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

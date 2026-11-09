@@ -1,0 +1,5 @@
+com\laundry\laundry\LaundryOrder.class
+com\laundry\laundry\OrderController.class
+com\laundry\laundry\LaundryApplication.class
+com\laundry\laundry\LaundryOrderRepository.class
+com\laundry\laundry\HomeController.class
